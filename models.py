@@ -15,14 +15,18 @@ class Usuario(Model):
     descripcion = CharField(max_length=255)
     administrador = SmallIntegerField()
 
-    #Funcion que especifica el fomato de salida
+    #Funcion que especifica el fomato de salida para un solo elemento
     def to_json(self):
-        return {'id': self.id, 'usuario':self.usuario, 'contraseña': self.contrasena, 'nombre': self.nombre, 'descripcion': self.descripcion, 'administrador': self.administrador }
+        return {'id': self.id, 'usuario':self.usuario, 'contrasena': self.contrasena, 'nombre': self.nombre, 'descripcion': self.descripcion, 'administrador': self.administrador }
+
+    #Funcion que devuelve solo el campo de ID
+    def iden(self):
+        return self.id
 
     #Funcion que devuelve solo el campo contraseña
     def pa(self) :
         return self.contrasena
-        
+
     #Clase que se utiliza para crear un nuevo registro en la base de Datos
     @classmethod
     def new(cls, usuario, contrasena, nombre, descripcion, administrador):
@@ -42,9 +46,15 @@ class Inventario(Model):
     #Se definen los campos de la tabla
     nombre = CharField(max_length=50)
     usuario = ForeignKeyField(Usuario)
-    #Funcion que especifica el formato de salida
+
+    #Funcion que especifica el formato de salida para solo un elemento
     def to_json(self, usr):
         return {'id': self.id, 'nombre': self.nombre, 'usuario': usr}
+
+    #Funcion que devuelve solo el campo de ID
+    def iden(self):
+        return self.id
+
     #Funcion que solo retorna los datos para indicar que fueron ingresados correctamente
     def add_ok(self):
         return {'id':self.id, 'nombre':self.nombre, 'usuario':self.usuario_id}
@@ -68,9 +78,15 @@ class Categoria(Model):
     nombre = CharField(max_length=100)
     descripcion = CharField(max_length=255)
     inventario = ForeignKeyField(Inventario)
-    #Funcion que especifica el fomato de salida
+
+    #Funcion que especifica el fomato de salida de un solo elemento
     def to_json(self, inv):
         return {'id': self.id, 'nombre': self.nombre, 'descripcion': self.descripcion, 'inventario':inv}
+
+    #Funcion que devuelve solo el campo de ID
+    def iden(self):
+        return self.id
+
     #Funcon que solo retorna los datos para indicar que fueron ingresados correctamente
     def add_ok(self):
         return {'id': self.id, 'nombre': self.nombre, 'descripcion': self.descripcion, 'inventario':self.inventario_id}
@@ -93,9 +109,15 @@ class Proveedor(Model):
     #Se definen los campos de la tabla
     nombre = CharField(max_length=100)
     descripcion = CharField(max_length=255)
-    #Funcion que especifica el fomato de salida
+
+    #Funcion que especifica el fomato de salida para solo un elemento
     def to_json(self):
         return {'id': self.id, 'nombre': self.nombre, 'descripcion': self.descripcion}
+
+    #Funcion que devuelve solo el campo de ID
+    def iden(self):
+        return self.id
+
     #Clase que se utiliza para crear un nuevo registro en la base de datos
     @classmethod
     def new(cls, nombre, descripcion):
@@ -117,9 +139,15 @@ class Producto(Model):
     descripcion = CharField(max_length=255)
     categoria = ForeignKeyField(Categoria)
     proveedor = ForeignKeyField(Proveedor)
-    #Funcion que especifica el formato de salida
+
+    #Funcion que especifica el formato de salida para solo un elemento
     def to_json(self, cat, prov):
         return {'id': self.id, 'nombre': self.nombre, 'descripcion': self.descripcion, 'categoria': cat, 'proveedor': prov}
+
+    #Funcion que devuelve solo el campo de ID
+    def iden(self):
+        return self.id
+
     #Funcion que solo returna los datos para indicar que fueron ingresados correctamente
     def add_ok(self):
         return {'id': self.id, 'nombre': self.nombre, 'descripcion': self.descripcion, 'categoria': self.categoria_id, 'proveedor': self.proveedor_id}
@@ -144,9 +172,15 @@ class Lote(Model):
     precio = FloatField()
     existencia = IntegerField()
     producto = ForeignKeyField(Producto)
-    #Funcion que especifica el formato de salida
+
+    #Funcion que especifica el formato de salida de un solo elemento
     def to_json(self, prod):
         return {'id': self.id, 'costo': self.costo, 'precio':self.precio, 'existencia': self.existencia, 'producto':prod}
+
+    #Funcion que devuelve solo el campo de ID
+    def iden(self):
+        return self.id
+
     #Funcion que solo returna los datos para indicar que fueron ingresados correctamente
     def add_ok(self):
         return {'id': self.id, 'costo': self.costo, 'precio':self.precio, 'existencia': self.existencia, 'producto':self.producto_id}
